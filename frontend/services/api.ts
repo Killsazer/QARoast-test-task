@@ -1,27 +1,6 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+import type { Quiz, CreateQuizPayload } from '@/types';
 
-export interface Question {
-  id?: number;
-  text: string;
-  type: 'BOOLEAN' | 'INPUT' | 'CHECKBOX';
-  options?: string[];
-  correctAnswers: string[];
-}
-
-export interface Quiz {
-  id: number;
-  title: string;
-  createdAt: string;
-  _count?: {
-    questions: number;
-  };
-  questions?: Question[];
-}
-
-export interface CreateQuizPayload {
-  title: string;
-  questions: Omit<Question, 'id'>[];
-}
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
 export const api = {
   getQuizzes: async (): Promise<Quiz[]> => {
@@ -44,7 +23,11 @@ export const api = {
       },
       body: JSON.stringify(data),
     });
-    if (!res.ok) throw new Error('Failed to create quiz');
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => null);
+      console.error('Backend error:', errorData);
+      throw new Error(errorData?.message ? JSON.stringify(errorData.message) : 'Failed to create quiz');
+    }
     return res.json();
   },
 
