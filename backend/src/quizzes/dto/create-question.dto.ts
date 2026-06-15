@@ -7,11 +7,7 @@ import {
   ArrayMinSize,
 } from 'class-validator';
 
-enum QuestionType {
-  BOOLEAN = 'BOOLEAN',
-  INPUT = 'INPUT',
-  CHECKBOX = 'CHECKBOX',
-}
+import { QuestionType } from '@prisma/client';
 
 export class CreateQuestionDto {
   @IsString()

@@ -114,6 +114,17 @@ The Web App will now be running on `http://localhost:3000`.
 
 ---
 
+## 🧪 Testing
+
+The backend business logic and controllers are covered by Unit Tests using Jest.
+To run the tests:
+```bash
+cd backend
+npm run test
+```
+
+---
+
 ## 🏗️ Architecture & Best Practices
 - **SOLID Principles:** The frontend strictly separates presentational UI components (`components/ui`) from complex logic (`components/features`). Form logic is decoupled from API submission.
 - **Next.js App Router Conventions:** Utilizes Server Components for data fetching (`page.tsx`) and Client Components only where interactivity is needed (`QuizListClient.tsx`), ensuring zero-JS initial load where possible and optimal SEO.
