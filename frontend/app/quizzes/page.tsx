@@ -1,16 +1,20 @@
 import { api } from '@/services/api';
 import { QuizListClient } from '@/components/features/QuizListClient';
-import Link from 'next/link';
-import { Button } from '@/components/ui/Button';
 
 export const dynamic = 'force-dynamic';
 
 export default async function QuizzesPage() {
+  let quizzes;
+  let fetchError = false;
+
   try {
-    const quizzes = await api.getQuizzes();
-    return <QuizListClient initialQuizzes={quizzes} />;
+    quizzes = await api.getQuizzes();
   } catch (error) {
     console.error('Failed to load quizzes:', error);
+    fetchError = true;
+  }
+
+  if (fetchError || !quizzes) {
     return (
       <div className="space-y-8 animate-in fade-in duration-500">
         <div className="flex items-center justify-between gap-4">
@@ -22,4 +26,6 @@ export default async function QuizzesPage() {
       </div>
     );
   }
+
+  return <QuizListClient initialQuizzes={quizzes} />;
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm, useFieldArray, Controller } from 'react-hook-form';
+import { useForm, useFieldArray, Controller, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { quizSchema, type QuizFormValues } from '@/lib/validations/quiz';
 import { Button } from '@/components/ui/Button';
@@ -19,7 +19,6 @@ export function QuizForm({ initialData, onSubmit, isSubmitting = false }: QuizFo
     register,
     control,
     handleSubmit,
-    watch,
     setValue,
     formState: { errors },
   } = useForm<QuizFormValues>({
@@ -35,7 +34,10 @@ export function QuizForm({ initialData, onSubmit, isSubmitting = false }: QuizFo
     name: 'questions',
   });
 
-  const watchQuestions = watch('questions');
+  const watchQuestions = useWatch({
+    control,
+    name: 'questions',
+  }) || [];
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 pb-20">
