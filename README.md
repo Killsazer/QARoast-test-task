@@ -54,6 +54,13 @@ Run Prisma to create the necessary tables in your database:
 ```bash
 npx prisma migrate dev --name init
 ```
+*(Note: When you run `migrate dev` or `migrate reset` for the first time, Prisma will automatically run the seed script if the database is empty.)*
+
+**Seed the Database (Optional):**
+To manually populate the database with sample quizzes at any time, run:
+```bash
+npx prisma db seed
+```
 
 **Start the Backend Server:**
 ```bash
